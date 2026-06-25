@@ -38,3 +38,10 @@ cd ..
 ## convert the notebook into a python script
 - `uv run jupyter nbconvert --to=script notebooks/duration-prediction-starter.ipynb`
 - move the freshly created file into a new folder called `duration_prediction` and rename it into `train.py` (`mkdir duration_prediction && mv notebooks/duration-prediction-starter.py duration_prediction/train.py`)
+
+## lets make the train.py script nice
+- remove all # lines from the script
+- move all the imports to the top
+- remove matplotlib and seaborn lines and imports
+- ctrl+shift+p format document (ruff or something else) (optional)
+
