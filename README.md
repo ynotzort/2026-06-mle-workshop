@@ -57,3 +57,9 @@ cd ..
 - add logging: `uv add loguru`
 - split out the argparse part into a `main.py` and make it a module by adding `__init__.py` file.
     - now we run the code via `uv run python -m duration_prediction.main --train-date 2022-01 --val-date 2022-02 --model-save-path model.pkl`
+
+## create a models folder
+- make a models folder (`mkdir models`)
+- run `uv run python -m duration_prediction.main --train-date 2022-01 --val-date 2022-02 --model-save-path models/2022-01.pkl`
+
+
