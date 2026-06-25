@@ -35,3 +35,6 @@ cd ..
 - on the bottom right click on the python version -> browse -> find the path to python (here it was `/workspaces/2026-06-mle-worksop/day_1/.venv/bin/python`)
 - go to the jupyter notebook and click select kernel -> python environments -> day-1
 
+## convert the notebook into a python script
+- `uv run jupyter nbconvert --to=script notebooks/duration-prediction-starter.ipynb`
+- move the freshly created file into a new folder called `duration_prediction` and rename it into `train.py` (`mkdir duration_prediction && mv notebooks/duration-prediction-starter.py duration_prediction/train.py`)
