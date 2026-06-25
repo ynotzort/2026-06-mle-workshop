@@ -22,39 +22,42 @@ def read_dataframe(filename):
     return df
 
 
-df_train = read_dataframe(
-    "https://d37ci6vzurychx.cloudfront.net/trip-data/green_tripdata_2022-01.parquet"
-)
-df_val = read_dataframe(
-    "https://d37ci6vzurychx.cloudfront.net/trip-data/green_tripdata_2022-02.parquet"
-)
+def train():
+    df_train = read_dataframe(
+        "https://d37ci6vzurychx.cloudfront.net/trip-data/green_tripdata_2022-01.parquet"
+    )
+    df_val = read_dataframe(
+        "https://d37ci6vzurychx.cloudfront.net/trip-data/green_tripdata_2022-02.parquet"
+    )
+
+    print(f"train size: {len(df_train)}, val size: {len(df_val)}")
+
+    categorical = ["PULocationID", "DOLocationID"]
+    numerical = ["trip_distance"]
+
+    dv = DictVectorizer()
+
+    train_dicts = df_train[categorical + numerical].to_dict(orient="records")
+    X_train = dv.fit_transform(train_dicts)
+
+    val_dicts = df_val[categorical + numerical].to_dict(orient="records")
+    X_val = dv.transform(val_dicts)
+
+    target = "duration"
+    y_train = df_train[target].values
+    y_val = df_val[target].values
+
+    lr = LinearRegression()
+    lr.fit(X_train, y_train)
+
+    y_pred = lr.predict(X_val)
+
+    mse = mean_squared_error(y_val, y_pred, squared=False)
+    print(f"MSE: {mse}")
+
+    with open("lin_reg.bin", "wb") as f_out:
+        pickle.dump((dv, lr), f_out)
 
 
-print(f"train size: {len(df_train)}, val size: {len(df_val)}")
-
-
-categorical = ["PULocationID", "DOLocationID"]
-numerical = ["trip_distance"]
-
-dv = DictVectorizer()
-
-train_dicts = df_train[categorical + numerical].to_dict(orient="records")
-X_train = dv.fit_transform(train_dicts)
-
-val_dicts = df_val[categorical + numerical].to_dict(orient="records")
-X_val = dv.transform(val_dicts)
-
-target = "duration"
-y_train = df_train[target].values
-y_val = df_val[target].values
-
-lr = LinearRegression()
-lr.fit(X_train, y_train)
-
-y_pred = lr.predict(X_val)
-
-mse = mean_squared_error(y_val, y_pred, squared=False)
-print(f"MSE: {mse}")
-
-with open("lin_reg.bin", "wb") as f_out:
-    pickle.dump((dv, lr), f_out)
+if __name__ == "__main__":
+    train()
