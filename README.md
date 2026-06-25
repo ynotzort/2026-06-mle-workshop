@@ -48,3 +48,4 @@ cd ..
 - add print statements to len and mse
 - create a train function and remove all top-level statements and add `if __name__=="__main__":`
 - add pipeline code
+- parametrize the train function
