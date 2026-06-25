@@ -38,7 +38,7 @@ def read_dataframe(filename: str) -> pd.DataFrame:
         raise e
 
 
-def train(train_date: date, val_date: date, out_path: str) -> None:
+def train(train_date: date, val_date: date, out_path: str) -> float:
     """
     Train a linear regression model on trip data and save the trained pipeline.
 
@@ -83,4 +83,6 @@ def train(train_date: date, val_date: date, out_path: str) -> None:
 
     with open(out_path, "wb") as f_out:
         pickle.dump(pipeline, f_out)
+        
+    return mse
 
