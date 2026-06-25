@@ -30,7 +30,7 @@ df_val = read_dataframe(
 )
 
 
-len(df_train), len(df_val)
+print(f"train size: {len(df_train)}, val size: {len(df_val)}")
 
 
 categorical = ["PULocationID", "DOLocationID"]
@@ -53,7 +53,8 @@ lr.fit(X_train, y_train)
 
 y_pred = lr.predict(X_val)
 
-mean_squared_error(y_val, y_pred, squared=False)
+mse = mean_squared_error(y_val, y_pred, squared=False)
+print(f"MSE: {mse}")
 
 with open("lin_reg.bin", "wb") as f_out:
     pickle.dump((dv, lr), f_out)

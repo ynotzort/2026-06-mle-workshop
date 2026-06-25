@@ -44,4 +44,6 @@ cd ..
 - move all the imports to the top
 - remove matplotlib and seaborn lines and imports
 - ctrl+shift+p format document (ruff or something else) (optional)
+- try to run it via `uv run python duration_prediction/train.py`
+- add print statements to len and mse
 
