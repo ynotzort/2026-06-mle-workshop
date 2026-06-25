@@ -6,3 +6,14 @@ this project is based on https://github.com/ynotzort/ml-engineering-contsructor-
 
 ## how to install uv
 just run `curl -LsSf https://astral.sh/uv/install.sh | sh`
+
+## get the notebook
+- create a new folder `day_1` (`mkdir day_1`)
+- change the directory into `day_1` (`cd day_1`)
+- get the original notebook
+```
+mkdir notebooks
+cd notebooks
+wget "https://raw.githubusercontent.com/ynotzort/2025-07-mle-workshop/refs/heads/main/day_1/notebooks/duration-prediction-starter.ipynb"
+cd ..
+```
