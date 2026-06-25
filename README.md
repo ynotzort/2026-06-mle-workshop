@@ -62,4 +62,6 @@ cd ..
 - make a models folder (`mkdir models`)
 - run `uv run python -m duration_prediction.main --train-date 2022-01 --val-date 2022-02 --model-save-path models/2022-01.pkl`
 
-
+## create a makefile
+- `touch Makefile`
+- now we can simply run `make train` instead of the uv command when developing
