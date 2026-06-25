@@ -12,7 +12,15 @@ from sklearn.metrics import mean_squared_error
 from sklearn.pipeline import make_pipeline
 
 
-def read_dataframe(filename):
+def read_dataframe(filename: str) -> pd.DataFrame:
+    """Reads the dataframe from a file/url and does some feature engineering
+
+    Args:
+        filename (str): from where to get the data
+
+    Returns:
+        pd.DataFrame: Processed df
+    """
     df = pd.read_parquet(filename)
 
     df["duration"] = df.lpep_dropoff_datetime - df.lpep_pickup_datetime
@@ -27,6 +35,19 @@ def read_dataframe(filename):
 
 
 def train(train_date: date, val_date: date, out_path: str) -> None:
+    """
+    Train a linear regression model on trip data and save the trained pipeline.
+
+    Loads training and validation datasets, preprocesses features, trains
+    a model to predict trip duration, evaluates it on the validation set,
+    and serializes the trained pipeline to disk.
+
+    Args:
+        train_date: Month/year of the training dataset.
+        val_date: Month/year of the validation dataset.
+        out_path: Path where the trained model will be saved.
+    """
+    
     base_url = "https://d37ci6vzurychx.cloudfront.net/trip-data/green_tripdata_{year}-{month:02d}.parquet"
     train_url = base_url.format(year=train_date.year, month=train_date.month)
     val_url = base_url.format(year=val_date.year, month=val_date.month)

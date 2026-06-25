@@ -52,3 +52,4 @@ cd ..
 - use argparse to parse arguments
     - now run it via `uv run python duration_prediction/train.py --train-date 2022-01 --val-date 2022-02 --model-save-path model.pkl`
     - alternatives https://github.com/fastapi/typer and click and fire
+- docstrings and typing
