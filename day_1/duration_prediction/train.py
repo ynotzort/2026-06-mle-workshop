@@ -21,17 +21,22 @@ def read_dataframe(filename: str) -> pd.DataFrame:
     Returns:
         pd.DataFrame: Processed df
     """
-    df = pd.read_parquet(filename)
 
-    df["duration"] = df.lpep_dropoff_datetime - df.lpep_pickup_datetime
-    df.duration = df.duration.dt.total_seconds() / 60
+    try:
+        df = pd.read_parquet(filename)
 
-    df = df[(df.duration >= 1) & (df.duration <= 60)]
+        df["duration"] = df.lpep_dropoff_datetime - df.lpep_pickup_datetime
+        df.duration = df.duration.dt.total_seconds() / 60
 
-    categorical = ["PULocationID", "DOLocationID"]
-    df[categorical] = df[categorical].astype(str)
+        df = df[(df.duration >= 1) & (df.duration <= 60)]
 
-    return df
+        categorical = ["PULocationID", "DOLocationID"]
+        df[categorical] = df[categorical].astype(str)
+
+        return df
+    except Exception as e:
+        print(f"Error loading the data for {filename}. error: {e}")
+        raise e
 
 
 def train(train_date: date, val_date: date, out_path: str) -> None:
@@ -47,7 +52,7 @@ def train(train_date: date, val_date: date, out_path: str) -> None:
         val_date: Month/year of the validation dataset.
         out_path: Path where the trained model will be saved.
     """
-    
+
     base_url = "https://d37ci6vzurychx.cloudfront.net/trip-data/green_tripdata_{year}-{month:02d}.parquet"
     train_url = base_url.format(year=train_date.year, month=train_date.month)
     val_url = base_url.format(year=val_date.year, month=val_date.month)
