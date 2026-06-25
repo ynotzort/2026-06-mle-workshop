@@ -10,7 +10,7 @@ from sklearn.feature_extraction import DictVectorizer
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error
 from sklearn.pipeline import make_pipeline
-
+from loguru import logger
 
 def read_dataframe(filename: str) -> pd.DataFrame:
     """Reads the dataframe from a file/url and does some feature engineering
@@ -35,7 +35,7 @@ def read_dataframe(filename: str) -> pd.DataFrame:
 
         return df
     except Exception as e:
-        print(f"Error loading the data for {filename}. error: {e}")
+        logger.exception(f"Error loading the data for {filename}. error: {e}")
         raise e
 
 
@@ -60,7 +60,7 @@ def train(train_date: date, val_date: date, out_path: str) -> None:
     df_train = read_dataframe(train_url)
     df_val = read_dataframe(val_url)
 
-    print(f"train size: {len(df_train)}, val size: {len(df_val)}")
+    logger.debug(f"train size: {len(df_train)}, val size: {len(df_val)}")
 
     categorical = ["PULocationID", "DOLocationID"]
     numerical = ["trip_distance"]
@@ -80,7 +80,7 @@ def train(train_date: date, val_date: date, out_path: str) -> None:
     y_pred = pipeline.predict(val_dicts)
 
     mse = mean_squared_error(y_val, y_pred, squared=False)
-    print(f"MSE: {mse}")
+    logger.info(f"MSE: {mse}")
 
     with open(out_path, "wb") as f_out:
         pickle.dump(pipeline, f_out)
