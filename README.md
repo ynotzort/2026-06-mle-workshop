@@ -17,3 +17,7 @@ cd notebooks
 wget "https://raw.githubusercontent.com/ynotzort/2025-07-mle-workshop/refs/heads/main/day_1/notebooks/duration-prediction-starter.ipynb"
 cd ..
 ```
+
+## create uv project
+- initialize a uv project with `uv init --python 3.10`
+- `uv sync`
