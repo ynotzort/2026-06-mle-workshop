@@ -72,3 +72,7 @@ cd ..
 - create a `__init__.py` in the tests folder (`touch tests/__init__.py`)
 - create a `test_train.py` file in the tests folder (has to start with `test_`)
 - run tests with `uv run pytest` or `make test`
+
+## follow best practices and create a nice readme
+- look at https://github.com/ynotzort/ml-engineering-contsructor-workshop#best-practices
+- make a nice readme.md
