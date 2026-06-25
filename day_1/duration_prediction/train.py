@@ -6,6 +6,7 @@ import pickle
 from sklearn.feature_extraction import DictVectorizer
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error
+from sklearn.pipeline import make_pipeline
 
 
 def read_dataframe(filename):
@@ -36,27 +37,25 @@ def train():
     numerical = ["trip_distance"]
 
     dv = DictVectorizer()
+    lr = LinearRegression()
+    pipeline = make_pipeline(dv, lr)
 
     train_dicts = df_train[categorical + numerical].to_dict(orient="records")
-    X_train = dv.fit_transform(train_dicts)
-
     val_dicts = df_val[categorical + numerical].to_dict(orient="records")
-    X_val = dv.transform(val_dicts)
 
     target = "duration"
     y_train = df_train[target].values
     y_val = df_val[target].values
 
-    lr = LinearRegression()
-    lr.fit(X_train, y_train)
+    pipeline.fit(train_dicts, y_train)
+    y_pred = pipeline.predict(val_dicts)
 
-    y_pred = lr.predict(X_val)
 
     mse = mean_squared_error(y_val, y_pred, squared=False)
     print(f"MSE: {mse}")
 
     with open("lin_reg.bin", "wb") as f_out:
-        pickle.dump((dv, lr), f_out)
+        pickle.dump(pipeline, f_out)
 
 
 if __name__ == "__main__":
