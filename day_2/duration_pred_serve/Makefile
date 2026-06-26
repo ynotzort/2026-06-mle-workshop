@@ -18,4 +18,4 @@ docker-build:
 
 .PHONY: docker-run
 docker-run: docker-build
-	docker run -it duration-prediction:latest
+	docker run -it -p 8080:8080 duration-prediction:latest
