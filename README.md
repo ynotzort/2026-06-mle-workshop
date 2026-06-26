@@ -76,3 +76,16 @@ cd ..
 ## follow best practices and create a nice readme
 - look at https://github.com/ynotzort/ml-engineering-contsructor-workshop#best-practices
 - make a nice readme.md
+
+
+# day 2
+
+## create the project and add the dependencies
+- create a top level folder `day_2` and change dir into it (`mkdir day_2` and `cd day_2`)
+- create a new uv project: `uv init --lib --python 3.10 duration_pred_serve`
+- change dir into `duration_pred_serve` (via `cd duration_pred_serve`)
+- add dependencies from day 1: `uv add scikit-learn==1.2.2 numpy==1.26.4`
+- lets add testing and logging dependencies: `uv add loguru pytest`
+- add a webserver dependency: `uv add "fastapi[standard]"`
+- add a requests dependency for testing the webserver `uv add --dev requests`
+- copy the model over from day_1: (`mkdir models` and `cp ../../day_1/models/2022-01.pkl models/`)
