@@ -101,3 +101,11 @@ cd ..
 - run it via `uv run python src/duration_pred_serve/serve.py`
 - lets combine the model loading code with the webserver part. modify it to contain the webserver
 - run the webserve via `uv run fastapi dev src/duration_pred_serve/serve.py` or `make serve`
+
+## environment variables
+- you can create environment variables via `export HELLO=world`, this creates a variable named `HELLO` with the value of `world`
+- print out the value of the variable with `echo $HELLO` (note the dollar sign!)
+- remove the variable via `unset HELLO`
+- in python you can access the environment variables via `os.getenv()`
+- alternatively via `BaseSettings` from the package `pydantic_settings`
+- we can now define `export MODEL_PATH=./models/2022-01.pkl`

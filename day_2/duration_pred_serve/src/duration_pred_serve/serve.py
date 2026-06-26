@@ -1,3 +1,4 @@
+import os
 import pickle
 from typing import Any
 
@@ -6,7 +7,7 @@ from sklearn.pipeline import Pipeline
 from fastapi import FastAPI
 
 # model loading
-model_path = "models/2022-01.pkl"
+model_path = os.getenv("MODEL_PATH", "model.pkl")
 with open(model_path, "rb") as f_in:
     model: Pipeline = pickle.load(f_in)
 
