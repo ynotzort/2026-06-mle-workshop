@@ -11,10 +11,12 @@ from loguru import logger
 
 class Settings(BaseSettings):
     MODEL_PATH: str = "./model.bin"
+    MODEL_VERSION: str = "not_defined"
 
 
 settings = Settings()
 
+logger.info(f"Model version: {settings.MODEL_VERSION}")
 logger.info(f"Model will be loaded from {settings.MODEL_PATH}")
 
 # model loading
@@ -37,6 +39,9 @@ class PredictionResponse(BaseModel):
 
     prediction_duration_minutes: float = Field(
         description="Predicted trip duration in minutes"
+    )
+    model_version: str = Field(
+        description="Model version that was used for the prediction"
     )
 
 
@@ -73,7 +78,9 @@ def predict_endpoint(predict_request: PredictRequest) -> PredictionResponse:
     # post process the prediction
     prediction = post_process_prediction(prediction_raw)
 
-    result = PredictionResponse(prediction_duration_minutes=prediction)
+    result = PredictionResponse(
+        prediction_duration_minutes=prediction, model_version=settings.MODEL_VERSION
+    )
     # return it to the user
     return result
 

@@ -110,3 +110,4 @@ cd ..
 - alternatively via `BaseSettings` from the package `pydantic_settings`
 - we can now define `export MODEL_PATH=./models/2022-01.pkl`
 - lets add it to the Makefile
+- add the MODEL_VERSION environment variables
