@@ -3,11 +3,22 @@ import pickle
 from typing import Any
 
 from pydantic import BaseModel, Field
+from pydantic_settings import BaseSettings
 from sklearn.pipeline import Pipeline
 from fastapi import FastAPI
+from loguru import logger
+
+
+class Settings(BaseSettings):
+    MODEL_PATH: str = "./model.bin"
+
+
+settings = Settings()
+
+logger.info(f"Model will be loaded from {settings.MODEL_PATH}")
 
 # model loading
-model_path = os.getenv("MODEL_PATH", "model.pkl")
+model_path = settings.MODEL_PATH
 with open(model_path, "rb") as f_in:
     model: Pipeline = pickle.load(f_in)
 
@@ -28,6 +39,7 @@ class PredictionResponse(BaseModel):
         description="Predicted trip duration in minutes"
     )
 
+
 def prepare_features(predict_request: PredictRequest) -> dict[str, Any]:
     result = predict_request.model_dump()
     result["PULocationID"] = str(result["PULocationID"])
@@ -36,12 +48,15 @@ def prepare_features(predict_request: PredictRequest) -> dict[str, Any]:
 
     return result
 
+
 def predict(model_input: dict[str, Any]) -> float:
     prediction = model.predict(model_input)
     return float(prediction[0])
 
+
 def post_process_prediction(prediction: float) -> float:
     return prediction
+
 
 app = FastAPI()
 
@@ -51,19 +66,16 @@ def predict_endpoint(predict_request: PredictRequest) -> PredictionResponse:
     # preproces the input from the user
     # optionally do feature preprocessing
     model_input = prepare_features(predict_request)
-    
+
     # feed the preprocesed data into the model and get a prediction
     prediction_raw = predict(model_input)
 
     # post process the prediction
     prediction = post_process_prediction(prediction_raw)
 
-    result = PredictionResponse(
-        prediction_duration_minutes=prediction
-    )
+    result = PredictionResponse(prediction_duration_minutes=prediction)
     # return it to the user
     return result
-    
 
 
 # trip_data = {
