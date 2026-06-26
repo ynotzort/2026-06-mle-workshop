@@ -94,3 +94,10 @@ cd ..
 - create a `ping.py` file inside of `src/duration_pred_serve/` and open it
 - change the python virtual environment to use the correct day 2 environment: click on the bottom right where it said day-1 and click browse, then select `/workspaces/2026-06-mle-workshop/day_2/duration_pred_serve/.venv/bin/python`
 - run the webserver via `uv run fastapi dev src/duration_pred_serve/ping.py`
+
+## implement serve functionality
+- create the file `serve.py` in `src/duration_serve_pred`
+- implement simple loading of the model file
+- run it via `uv run python src/duration_pred_serve/serve.py`
+- lets combine the model loading code with the webserver part. modify it to contain the webserver
+- run the webserve via `uv run fastapi dev src/duration_pred_serve/serve.py` or `make serve`
