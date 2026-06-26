@@ -89,3 +89,8 @@ cd ..
 - add a webserver dependency: `uv add "fastapi[standard]"`
 - add a requests dependency for testing the webserver `uv add --dev requests`
 - copy the model over from day_1: (`mkdir models` and `cp ../../day_1/models/2022-01.pkl models/`)
+
+## simple webserver example - ping for fastAPI
+- create a `ping.py` file inside of `src/duration_pred_serve/` and open it
+- change the python virtual environment to use the correct day 2 environment: click on the bottom right where it said day-1 and click browse, then select `/workspaces/2026-06-mle-workshop/day_2/duration_pred_serve/.venv/bin/python`
+- run the webserver via `uv run fastapi dev src/duration_pred_serve/ping.py`
